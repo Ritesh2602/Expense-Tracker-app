@@ -32,19 +32,32 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8">
-          <h1 class="text-light mt-80" style="font-size: 60px;">Bringing the power of analytics to your smartphone</h1>
+          <h1 class="text-light mt-80" style="font-size: 60px">
+            Bringing the power of analytics to your smartphone
+          </h1>
         </div>
         <div class="col-md-4 mt-80">
           <div class="card">
+            <div class="alert alert-warning">{{ message }}</div>
             <div class="card-body">
-              <form class="form">
-                <label>Email</label></form><br>
-                <input type="email" class="form-control"><br>
-                <label>Password</label></form><br>
-                <input type="password" class="form-control"><br><br>
-                <input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
+              <form class="form" method="post" action="/login_validation">
+                <label>Email</label><br />
+                <input type="email" name="email" class="form-control" /><br />
+                <label>Password</label><br />
+                <input
+                  type="password"
+                  name="password"
+                  class="form-control"
+                /><br /><br />
+                <input
+                  type="submit"
+                  class="btn btn-primary btn-block btn-lg"
+                  value="Login"
+                />
               </form>
-              <p class="mt-2">"Not a member?<a href="/register">Register here"</a></p>
+              <p class="mt-2">
+                "Not a member?<a href="/register">Register here"</a>
+              </p>
             </div>
           </div>
         </div>

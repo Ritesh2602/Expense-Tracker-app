@@ -1,8 +1,10 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,redirect,session
 from flask_sqlalchemy import SQLAlchemy
 import mysql.connector
+import os
 
 app=Flask(__name__)
+app.secret_key=os.urandom(24)
 conn = mysql.connector.connect(
    user='root', password='', host='127.0.0.1', database='login'
 )
@@ -20,7 +22,10 @@ def register():
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    if 'user_id' in session:
+        return render_template('home.html')
+    else:
+        return redirect('/')
 
 @app.route('/login_validation', methods=['POST','GET'])
 
@@ -36,10 +41,11 @@ def login_validation():
     # return user
 
     if user:
-        return render_template('home.html')
+        session['user_id']=user[0][0]
+        return redirect('/home')
     else:
         message="Enter correct details"
-        return render_template('login.html',message=message)
+        return redirect('/',message=message)
     
 
 @app.route('/add_user',methods=['POST'])
@@ -52,6 +58,12 @@ def add_user():
     # cursor.execute(query)
     conn.commit()
     return "User registered successfully"
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id')
+    return redirect('/')
 
 
 # print(__name__)
